@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Fil de Bretagne — Prêt-à-porter haut de gamme, Concarneau</title>
+  <meta name="description" content="Le Fil de Bretagne, boutique de prêt-à-porter haut de gamme à Concarneau. Pièces intemporelles en lin, coton et laine mérinos, inspirées des couleurs bretonnes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sand: '#f5f0e8',
+            navy: '#1a2d4a',
+            terracotta: '#c4714a',
+            stone: '#3d3d3d',
+          },
+          fontFamily: {
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    #navbar { transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+    #navbar.scrolled { background-color: rgba(26,45,74,0.97); backdrop-filter: blur(12px); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+    .tab-btn { transition: background-color 0.2s, color 0.2s; }
+    .tab-btn.active { background-color: #1a2d4a; color: #f5f0e8; }
+    .lookbook-img { transition: transform 0.5s ease; }
+    .lookbook-item:hover .lookbook-img { transform: scale(1.06); }
+    .lookbook-overlay { opacity: 0; transition: opacity 0.3s ease; }
+    .lookbook-item:hover .lookbook-overlay { opacity: 1; }
+    #lightbox { display: none; }
+    #lightbox.open { display: flex; }
+    .ham span { display: block; width: 24px; height: 2px; background: white; transition: all 0.3s; margin-bottom: 5px; }
+    .ham span:last-child { margin-bottom: 0; }
+    .ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .ham.open span:nth-child(2) { opacity: 0; }
+    .ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    input, textarea { background: rgba(255,255,255,0.08); color: #f5f0e8; }
+    input::placeholder, textarea::placeholder { color: rgba(245,240,232,0.3); }
+    input:focus, textarea:focus { outline: none; border-color: #c4714a; }
+  </style>
+</head>
+<body class="bg-sand text-stone font-sans">
+
+  <!-- NAVBAR -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50" style="background-color:rgba(26,45,74,0.85)">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex flex-col leading-tight">
+        <span class="font-serif text-sand text-base font-light tracking-[0.25em] uppercase">Le Fil</span>
+        <span class="font-serif text-terracotta text-xl font-semibold italic tracking-wide">de Bretagne</span>
+      </a>
+      <ul class="hidden md:flex items-center gap-8 text-sand font-sans font-light text-xs tracking-[0.18em] uppercase">
+        <li><a href="#collections" class="hover:text-terracotta transition-colors">Collections</a></li>
+        <li><a href="#histoire" class="hover:text-terracotta transition-colors">Notre Histoire</a></li>
+        <li><a href="#lookbook" class="hover:text-terracotta transition-colors">Lookbook</a></li>
+        <li><a href="#equipe" class="hover:text-terracotta transition-colors">Équipe</a></li>
+        <li><a href="#contact" class="border border-terracotta text-terracotta px-5 py-2 hover:bg-terracotta hover:text-white transition-all">Contact</a></li>
+      </ul>
+      <button id="hamburger" class="ham md:hidden flex flex-col p-2" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-white/10" style="background:rgba(26,45,74,0.97)">
+      <ul class="flex flex-col px-6 py-4 gap-1 text-sand font-light text-sm tracking-widest uppercase">
+        <li><a href="#collections" class="block py-3 border-b border-white/10 hover:text-terracotta transition-colors">Collections</a></li>
+        <li><a href="#histoire" class="block py-3 border-b border-white/10 hover:text-terracotta transition-colors">Notre Histoire</a></li>
+        <li><a href="#lookbook" class="block py-3 border-b border-white/10 hover:text-terracotta transition-colors">Lookbook</a></li>
+        <li><a href="#equipe" class="block py-3 border-b border-white/10 hover:text-terracotta transition-colors">Équipe</a></li>
+        <li><a href="#contact" class="block py-3 text-terracotta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+    <img src="https://images.pexels.com/photos/26998033/pexels-photo-26998033.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Élégance bretonne" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0" style="background:rgba(26,45,74,0.58)"></div>
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <p class="font-serif italic text-terracotta text-lg md:text-xl tracking-widest mb-4 fade-in">Concarneau · Depuis 2018</p>
+      <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl text-sand font-light leading-tight mb-6 fade-in">
+        L'Élégance<br/><em class="font-semibold">à la Bretonne</em>
+      </h1>
+      <p class="font-sans text-sand/80 text-base md:text-lg font-light max-w-2xl mx-auto mb-10 fade-in">
+        Prêt-à-porter haut de gamme inspiré des couleurs et des matières de notre Bretagne.<br/>
+        Lin, coton, laine mérinos — des pièces intemporelles, locales, durables.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in">
+        <a href="#collections" class="bg-terracotta text-white font-sans font-medium px-8 py-4 text-xs tracking-[0.2em] uppercase hover:bg-opacity-90 transition-all">Découvrir les collections</a>
+        <a href="#contact" class="border border-sand text-sand font-sans font-light px-8 py-4 text-xs tracking-[0.2em] uppercase hover:bg-sand hover:text-navy transition-all">Prendre rendez-vous</a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-sand/50">
+      <span class="font-sans text-xs tracking-widest uppercase">Défiler</span>
+      <div class="w-px h-10 bg-sand/30 animate-pulse"></div>
+    </div>
+  </section>
+
+  <!-- NOTRE HISTOIRE -->
+  <section id="histoire" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div class="fade-in">
+          <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Notre Histoire</p>
+          <h2 class="font-serif text-4xl md:text-5xl text-navy font-light leading-snug mb-8">
+            Deux amis,<br/><em class="font-semibold">une vision bretonne</em>
+          </h2>
+          <div class="space-y-5 text-stone/75 font-light leading-relaxed">
+            <p>En 2018, Maïwenn Kerguénou et Erwan Jégou, issus des écoles de mode parisiennes mais profondément attachés à leur Bretagne natale, décident de rentrer au pays pour créer quelque chose d'unique : un prêt-à-porter qui honore les matières et les couleurs de la côte.</p>
+            <p>Le bleu profond de l'Atlantique, le beige du sable de Concarneau, la douceur des embruns — leur palette naît du paysage breton. Des pièces sobres, élégantes, faites pour durer bien au-delà d'une saison.</p>
+            <p><strong class="font-medium text-navy">Le Fil de Bretagne</strong>, c'est aujourd'hui une collection femme et homme sélectionnée avec soin, des matières sourcées auprès de producteurs engagés, et une boutique-atelier au cœur du vieux Concarneau.</p>
+          </div>
+          <div class="mt-10 grid grid-cols-3 gap-6 border-t border-stone/15 pt-10">
+            <div class="text-center">
+              <div class="font-serif text-4xl text-navy font-semibold">2018</div>
+              <div class="font-sans text-xs text-stone/50 tracking-widest uppercase mt-1">Fondée en</div>
+            </div>
+            <div class="text-center border-x border-stone/15">
+              <div class="font-serif text-4xl text-navy font-semibold">100%</div>
+              <div class="font-sans text-xs text-stone/50 tracking-widest uppercase mt-1">Local & Durable</div>
+            </div>
+            <div class="text-center">
+              <div class="font-serif text-4xl text-navy font-semibold">3</div>
+              <div class="font-sans text-xs text-stone/50 tracking-widest uppercase mt-1">Collections</div>
+            </div>
+          </div>
+        </div>
+        <div class="fade-in relative">
+          <img src="https://images.pexels.com/photos/5531746/pexels-photo-5531746.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Intérieur boutique Le Fil de Bretagne" class="w-full h-[520px] object-cover" />
+          <div class="absolute -bottom-6 -left-6 w-44 h-44 border-2 border-terracotta/25 -z-10 hidden md:block"></div>
+          <div class="absolute -top-6 -right-6 w-24 h-24 bg-sand -z-10 hidden md:block"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LES COLLECTIONS -->
+  <section id="collections" class="py-24 md:py-32 bg-sand">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Nos créations</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-navy font-light">Les Collections</h2>
+      </div>
+      <div class="flex justify-center gap-0 mb-12 fade-in">
+        <button class="tab-btn active font-sans text-xs tracking-[0.18em] uppercase px-8 py-3 border border-navy" data-tab="femme">Femme</button>
+        <button class="tab-btn text-navy font-sans text-xs tracking-[0.18em] uppercase px-8 py-3 border-y border-r border-navy hover:bg-navy hover:text-sand" data-tab="homme">Homme</button>
+        <button class="tab-btn text-navy font-sans text-xs tracking-[0.18em] uppercase px-8 py-3 border-y border-r border-navy hover:bg-navy hover:text-sand" data-tab="accessoires">Accessoires</button>
+      </div>
+
+      <!-- FEMME -->
+      <div id="tab-femme" class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/1391499/pexels-photo-1391499.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Robe Lin Côtière" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Lin 100%</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Robe Lin Côtière</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">189 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/4352249/pexels-photo-4352249.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cardigan Mérinos Doux" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Laine mérinos</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Cardigan Mérinos Doux</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">145 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/2065195/pexels-photo-2065195.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Pantalon Brise-Marine" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Lin / Coton</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Pantalon Brise-Marine</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">125 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/15071849/pexels-photo-15071849.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Veste Armor" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Coton bio</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Veste Armor</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">220 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+      </div>
+
+      <!-- HOMME -->
+      <div id="tab-homme" class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 hidden">
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/15092608/pexels-photo-15092608.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Costume Port-Neuf" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Laine mérinos</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Costume Port-Neuf</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">395 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/14564871/pexels-photo-14564871.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Manteau Finistère" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Laine / Cachemire</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Manteau Finistère</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">480 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/25652584/pexels-photo-25652584.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Chemise Mer d'Iroise" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Coton BCI</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Chemise Mer d'Iroise</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">95 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/20374424/pexels-photo-20374424.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Pull Celtic" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Mérinos mélangé</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Pull Celtic</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">165 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+      </div>
+
+      <!-- ACCESSOIRES -->
+      <div id="tab-accessoires" class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 hidden">
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/2986445/pexels-photo-2986445.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Écharpe Ar Mor" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Laine mérinos</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Écharpe Ar Mor</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">85 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/336372/pexels-photo-336372.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Cabas Pen Ar Bed" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Cuir pleine fleur</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Cabas Pen Ar Bed</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">195 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/3781699/pexels-photo-3781699.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Châle Morgat" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Cachemire</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Châle Morgat</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">145 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+        <div class="group fade-in">
+          <div class="overflow-hidden mb-4"><img src="https://images.pexels.com/photos/8774406/pexels-photo-8774406.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ceinture Quimper" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" /></div>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-1">Cuir naturel</p>
+          <h3 class="font-serif text-xl text-navy font-medium mb-2">Ceinture Quimper</h3>
+          <div class="flex items-center justify-between"><span class="font-serif text-lg text-stone">75 €</span><button class="font-sans text-xs tracking-widest uppercase text-navy border-b border-navy pb-px hover:text-terracotta hover:border-terracotta transition-colors">Voir le produit</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOKBOOK -->
+  <section id="lookbook" class="py-24 md:py-32 bg-navy">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Inspirations</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-sand font-light">Le Lookbook</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div class="lookbook-item relative overflow-hidden cursor-pointer fade-in" data-src="https://images.pexels.com/photos/4940756/pexels-photo-4940756.jpeg?auto=compress&cs=tinysrgb&w=1400">
+          <img src="https://images.pexels.com/photos/4940756/pexels-photo-4940756.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lookbook" class="lookbook-img w-full h-72 md:h-80 object-cover" />
+          <div class="lookbook-overlay absolute inset-0 flex items-center justify-center" style="background:rgba(26,45,74,0.55)">
+            <span class="font-serif text-sand text-2xl italic">Voir →</span>
+          </div>
+        </div>
+        <div class="lookbook-item relative overflow-hidden cursor-pointer fade-in" data-src="https://images.pexels.com/photos/15306470/pexels-photo-15306470.jpeg?auto=compress&cs=tinysrgb&w=1400">
+          <img src="https://images.pexels.com/photos/15306470/pexels-photo-15306470.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lookbook" class="lookbook-img w-full h-72 md:h-80 object-cover" />
+          <div class="lookbook-overlay absolute inset-0 flex items-center justify-center" style="background:rgba(26,45,74,0.55)">
+            <span class="font-serif text-sand text-2xl italic">Voir →</span>
+          </div>
+        </div>
+        <div class="lookbook-item relative overflow-hidden cursor-pointer fade-in" data-src="https://images.pexels.com/photos/7679668/pexels-photo-7679668.jpeg?auto=compress&cs=tinysrgb&w=1400">
+          <img src="https://images.pexels.com/photos/7679668/pexels-photo-7679668.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lookbook" class="lookbook-img w-full h-72 md:h-80 object-cover" />
+          <div class="lookbook-overlay absolute inset-0 flex items-center justify-center" style="background:rgba(26,45,74,0.55)">
+            <span class="font-serif text-sand text-2xl italic">Voir →</span>
+          </div>
+        </div>
+        <div class="lookbook-item relative overflow-hidden cursor-pointer fade-in" data-src="https://images.pexels.com/photos/6069560/pexels-photo-6069560.jpeg?auto=compress&cs=tinysrgb&w=1400">
+          <img src="https://images.pexels.com/photos/6069560/pexels-photo-6069560.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lookbook" class="lookbook-img w-full h-72 md:h-80 object-cover" />
+          <div class="lookbook-overlay absolute inset-0 flex items-center justify-center" style="background:rgba(26,45,74,0.55)">
+            <span class="font-serif text-sand text-2xl italic">Voir →</span>
+          </div>
+        </div>
+        <div class="lookbook-item relative overflow-hidden cursor-pointer fade-in" data-src="https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=1400">
+          <img src="https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lookbook" class="lookbook-img w-full h-72 md:h-80 object-cover" />
+          <div class="lookbook-overlay absolute inset-0 flex items-center justify-center" style="background:rgba(26,45,74,0.55)">
+            <span class="font-serif text-sand text-2xl italic">Voir →</span>
+          </div>
+        </div>
+        <div class="lookbook-item relative overflow-hidden cursor-pointer fade-in" data-src="https://images.pexels.com/photos/338027/pexels-photo-338027.jpeg?auto=compress&cs=tinysrgb&w=1400">
+          <img src="https://images.pexels.com/photos/338027/pexels-photo-338027.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lookbook" class="lookbook-img w-full h-72 md:h-80 object-cover" />
+          <div class="lookbook-overlay absolute inset-0 flex items-center justify-center" style="background:rgba(26,45,74,0.55)">
+            <span class="font-serif text-sand text-2xl italic">Voir →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="fixed inset-0 z-[200] items-center justify-center p-4" style="background:rgba(26,45,74,0.96)">
+    <button id="lb-close" class="absolute top-6 right-8 text-sand text-5xl leading-none hover:text-terracotta transition-colors" aria-label="Fermer">&times;</button>
+    <img id="lb-img" src="" alt="" class="max-w-full max-h-[90vh] object-contain" />
+  </div>
+
+  <!-- NOS VALEURS -->
+  <section id="valeurs" class="py-24 md:py-32 bg-sand">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Notre engagement</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-navy font-light">Nos Valeurs</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="text-center fade-in">
+          <div class="w-20 h-20 mx-auto mb-6 border-2 border-terracotta flex items-center justify-center">
+            <svg class="w-9 h-9 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl text-navy font-semibold mb-4">Made in Bretagne</h3>
+          <p class="font-sans text-stone/65 font-light leading-relaxed">Chaque pièce est conçue et assemblée en Bretagne, dans le respect des savoir-faire régionaux. Nos ateliers partenaires sont situés à moins de 100 km de notre boutique.</p>
+        </div>
+        <div class="text-center fade-in">
+          <div class="w-20 h-20 mx-auto mb-6 border-2 border-terracotta flex items-center justify-center">
+            <svg class="w-9 h-9 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl text-navy font-semibold mb-4">Matières Naturelles</h3>
+          <p class="font-sans text-stone/65 font-light leading-relaxed">Lin breton, coton bio certifié, laine mérinos tracée — nous sélectionnons avec exigence des matières qui respectent la peau et la planète. Aucune fibre synthétique.</p>
+        </div>
+        <div class="text-center fade-in">
+          <div class="w-20 h-20 mx-auto mb-6 border-2 border-terracotta flex items-center justify-center">
+            <svg class="w-9 h-9 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl text-navy font-semibold mb-4">Pièces Intemporelles</h3>
+          <p class="font-sans text-stone/65 font-light leading-relaxed">Nous créons contre la fast fashion. Nos pièces sont pensées pour traverser les saisons et les années, avec un style épuré qui refuse les tendances éphémères.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- L'ÉQUIPE -->
+  <section id="equipe" class="py-24 md:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Celles et ceux qui font</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-navy font-light">L'Équipe</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="text-center fade-in">
+          <div class="overflow-hidden mb-6">
+            <img src="https://images.pexels.com/photos/4355345/pexels-photo-4355345.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Maïwenn Kerguénou" class="w-full h-80 object-cover object-top" />
+          </div>
+          <h3 class="font-serif text-2xl text-navy font-semibold mb-1">Maïwenn Kerguénou</h3>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-5">Fondatrice & Créatrice</p>
+          <p class="font-serif italic text-stone/55 text-lg leading-relaxed">"Habiller avec élégance, c'est aussi honorer la terre qui nous a vus naître."</p>
+        </div>
+        <div class="text-center fade-in">
+          <div class="overflow-hidden mb-6">
+            <img src="https://images.pexels.com/photos/14564871/pexels-photo-14564871.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Erwan Jégou" class="w-full h-80 object-cover object-top" />
+          </div>
+          <h3 class="font-serif text-2xl text-navy font-semibold mb-1">Erwan Jégou</h3>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-5">Co-fondateur & Styliste Homme</p>
+          <p class="font-serif italic text-stone/55 text-lg leading-relaxed">"L'élégance masculine, c'est la sobriété qui parle, jamais l'ostentation."</p>
+        </div>
+        <div class="text-center fade-in">
+          <div class="overflow-hidden mb-6">
+            <img src="https://images.pexels.com/photos/7959820/pexels-photo-7959820.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Anaïs Lesné" class="w-full h-80 object-cover object-top" />
+          </div>
+          <h3 class="font-serif text-2xl text-navy font-semibold mb-1">Anaïs Lesné</h3>
+          <p class="font-sans text-xs text-terracotta tracking-widest uppercase mb-5">Responsable Boutique</p>
+          <p class="font-serif italic text-stone/55 text-lg leading-relaxed">"Chaque cliente qui entre mérite d'en ressortir avec le sentiment d'être elle-même, en mieux."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVIS CLIENTS -->
+  <section id="avis" class="py-24 md:py-32 bg-sand">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Ce qu'ils disent</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-navy font-light">Avis Clients</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 md:p-10 fade-in">
+          <div class="text-terracotta text-xl mb-5">★★★★★</div>
+          <p class="font-serif text-xl italic text-stone leading-relaxed mb-7">"Une boutique hors du commun. J'ai trouvé une robe en lin que je porte depuis deux ans, elle est toujours aussi belle. L'accueil de Maïwenn est chaleureux et sans pression — elle prend le temps d'écouter, de conseiller, de comprendre votre style."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-navy rounded-full flex items-center justify-center shrink-0"><span class="font-serif text-sand font-semibold">M</span></div>
+            <div><p class="font-sans font-medium text-navy text-sm">Marie-Hélène Breton</p><p class="font-sans text-xs text-stone/45">Quimper · Cliente depuis 2019</p></div>
+          </div>
+        </div>
+        <div class="bg-white p-8 md:p-10 fade-in">
+          <div class="text-terracotta text-xl mb-5">★★★★★</div>
+          <p class="font-serif text-xl italic text-stone leading-relaxed mb-7">"J'avais des doutes sur le prêt-à-porter 'haut de gamme breton'... mais j'ai été convaincu dès le premier essayage. Le costume Port-Neuf est d'une coupe parfaite. Erwan a un œil vraiment aiguisé, et ses conseils sont toujours justes."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-navy rounded-full flex items-center justify-center shrink-0"><span class="font-serif text-sand font-semibold">J</span></div>
+            <div><p class="font-sans font-medium text-navy text-sm">Jean-Yves Kervadec</p><p class="font-sans text-xs text-stone/45">Concarneau · Client depuis 2020</p></div>
+          </div>
+        </div>
+        <div class="bg-white p-8 md:p-10 fade-in">
+          <div class="text-terracotta text-xl mb-5">★★★★★</div>
+          <p class="font-serif text-xl italic text-stone leading-relaxed mb-7">"Le service de rendez-vous styling est une vraie pépite. En 45 minutes, Anaïs m'a aidée à construire un dressing capsule de six pièces qui vont toutes ensemble. Fini les achats compulsifs — je m'habille mieux avec moins."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-navy rounded-full flex items-center justify-center shrink-0"><span class="font-serif text-sand font-semibold">S</span></div>
+            <div><p class="font-sans font-medium text-navy text-sm">Solenn Morvan</p><p class="font-sans text-xs text-stone/45">Brest · Cliente depuis 2021</p></div>
+          </div>
+        </div>
+        <div class="bg-white p-8 md:p-10 fade-in">
+          <div class="text-terracotta text-xl mb-5">★★★★★</div>
+          <p class="font-serif text-xl italic text-stone leading-relaxed mb-7">"Je cherchais un cadeau pour ma femme — local, beau, durable. Le châle Morgat en cachemire a été un coup de foudre. L'emballage soigné, la carte manuscrite... chaque détail est pensé. On sent que les fondateurs aiment ce qu'ils font."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-navy rounded-full flex items-center justify-center shrink-0"><span class="font-serif text-sand font-semibold">P</span></div>
+            <div><p class="font-sans font-medium text-navy text-sm">Pierre-Yves Guével</p><p class="font-sans text-xs text-stone/45">Lorient · Client depuis 2022</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & VISITE -->
+  <section id="contact" class="py-24 md:py-32 bg-navy">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14 fade-in">
+        <p class="font-serif italic text-terracotta text-lg tracking-wide mb-3">Venez nous rendre visite</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-sand font-light">Contact & Visite</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-16">
+        <!-- Formulaire -->
+        <div class="fade-in">
+          <h3 class="font-serif text-2xl text-sand font-light mb-8">Écrivez-nous</h3>
+          <form class="space-y-6" onsubmit="return false;">
+            <div>
+              <label class="block font-sans text-xs text-sand/50 tracking-widest uppercase mb-2">Nom complet</label>
+              <input type="text" placeholder="Votre nom" class="w-full border border-white/20 font-light px-4 py-3 transition-colors w-full" style="background:rgba(255,255,255,0.08);color:#f5f0e8" />
+            </div>
+            <div>
+              <label class="block font-sans text-xs text-sand/50 tracking-widest uppercase mb-2">Email</label>
+              <input type="email" placeholder="votre@email.com" class="w-full border border-white/20 font-light px-4 py-3 transition-colors" style="background:rgba(255,255,255,0.08);color:#f5f0e8" />
+            </div>
+            <div>
+              <label class="block font-sans text-xs text-sand/50 tracking-widest uppercase mb-2">Message</label>
+              <textarea rows="4" placeholder="Votre message..." class="w-full border border-white/20 font-light px-4 py-3 resize-none" style="background:rgba(255,255,255,0.08);color:#f5f0e8"></textarea>
+            </div>
+            <div class="flex items-start gap-3">
+              <input type="checkbox" id="rdv" class="mt-1 w-4 h-4 shrink-0" style="accent-color:#c4714a" />
+              <label for="rdv" class="font-sans text-sm text-sand/65 font-light cursor-pointer">Je souhaite un rendez-vous styling personnalisé</label>
+            </div>
+            <button type="submit" class="w-full bg-terracotta text-white font-sans font-medium py-4 text-xs tracking-[0.2em] uppercase hover:opacity-90 transition-opacity">Envoyer le message</button>
+          </form>
+        </div>
+        <!-- Infos + carte -->
+        <div class="fade-in">
+          <h3 class="font-serif text-2xl text-sand font-light mb-6">Informations pratiques</h3>
+          <div class="space-y-5 mb-8">
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 border border-terracotta/60 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+              </div>
+              <div><p class="font-sans text-xs text-sand/40 tracking-widest uppercase mb-1">Adresse</p><p class="font-sans text-sand font-light">8 rue du Port<br />29900 Concarneau</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 border border-terracotta/60 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+              </div>
+              <div><p class="font-sans text-xs text-sand/40 tracking-widest uppercase mb-1">Téléphone</p><p class="font-sans text-sand font-light">02 98 97 14 22</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 border border-terracotta/60 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+              </div>
+              <div><p class="font-sans text-xs text-sand/40 tracking-widest uppercase mb-1">Email</p><p class="font-sans text-sand font-light">contact@lefilbretagne.fr</p></div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-8 h-8 border border-terracotta/60 flex items-center justify-center shrink-0 mt-0.5">
+                <svg class="w-4 h-4 text-terracotta" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <div>
+                <p class="font-sans text-xs text-sand/40 tracking-widest uppercase mb-1">Horaires</p>
+                <p class="font-sans text-sand font-light">Mar – Sam : 10h00 – 19h00</p>
+                <p class="font-sans text-sand/40 font-light text-sm">Lundi & Dimanche : Fermé</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full h-56 overflow-hidden">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-3.940%2C47.855%2C-3.902%2C47.885&layer=mapnik&marker=47.870%2C-3.921"
+              width="100%" height="224"
+              style="border:none;filter:grayscale(20%) brightness(0.85)"
+              title="Le Fil de Bretagne — Concarneau"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#2a2a2a" class="text-sand/60 py-16">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div>
+          <span class="font-serif text-sand text-lg font-light tracking-[0.25em] uppercase block">Le Fil</span>
+          <span class="font-serif text-terracotta text-2xl font-semibold italic block mb-4">de Bretagne</span>
+          <p class="font-sans text-sm font-light leading-relaxed text-sand/40">Prêt-à-porter haut de gamme,<br/>inspiré des couleurs bretonnes.<br/>Concarneau, depuis 2018.</p>
+        </div>
+        <div>
+          <h4 class="font-sans text-xs text-sand/30 tracking-widest uppercase mb-5">Navigation</h4>
+          <ul class="space-y-2 font-sans font-light text-sm">
+            <li><a href="#collections" class="hover:text-sand transition-colors">Collections</a></li>
+            <li><a href="#histoire" class="hover:text-sand transition-colors">Notre Histoire</a></li>
+            <li><a href="#lookbook" class="hover:text-sand transition-colors">Lookbook</a></li>
+            <li><a href="#equipe" class="hover:text-sand transition-colors">L'Équipe</a></li>
+            <li><a href="#contact" class="hover:text-sand transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-sans text-xs text-sand/30 tracking-widest uppercase mb-5">Horaires</h4>
+          <ul class="space-y-2 font-sans font-light text-sm">
+            <li class="text-sand">Mardi – Samedi</li>
+            <li>10h00 – 19h00</li>
+            <li class="text-sand/30 mt-3">Lundi & Dimanche</li>
+            <li class="text-sand/30">Fermé</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-sans text-xs text-sand/30 tracking-widest uppercase mb-5">Suivez-nous</h4>
+          <div class="flex gap-3 mb-5">
+            <a href="#" aria-label="Instagram" class="w-10 h-10 border border-sand/20 flex items-center justify-center hover:border-terracotta hover:text-terracotta transition-colors">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" /></svg>
+            </a>
+            <a href="#" aria-label="Pinterest" class="w-10 h-10 border border-sand/20 flex items-center justify-center hover:border-terracotta hover:text-terracotta transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="w-10 h-10 border border-sand/20 flex items-center justify-center hover:border-terracotta hover:text-terracotta transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+          </div>
+          <p class="font-sans text-xs text-sand/30 leading-relaxed">@lefilbretagne<br/>Partagez vos looks avec<br/><span class="text-terracotta">#LeFilDeBretagne</span></p>
+        </div>
+      </div>
+      <div class="border-t border-sand/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="font-sans text-xs text-sand/25">© 2024 Le Fil de Bretagne — Tous droits réservés</p>
+        <div class="flex gap-6 font-sans text-xs text-sand/25">
+          <a href="#" class="hover:text-sand/50 transition-colors">Mentions légales</a>
+          <a href="#" class="hover:text-sand/50 transition-colors">Politique de confidentialité</a>
+          <a href="#" class="hover:text-sand/50 transition-colors">CGV</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Hamburger
+    const ham = document.getElementById('hamburger');
+    const mMenu = document.getElementById('mobile-menu');
+    ham.addEventListener('click', () => {
+      ham.classList.toggle('open');
+      mMenu.classList.toggle('hidden');
+    });
+    mMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      ham.classList.remove('open');
+      mMenu.classList.add('hidden');
+    }));
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+      });
+    });
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    document.querySelectorAll('.lookbook-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lbImg.src = item.dataset.src;
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+    document.getElementById('lb-close').addEventListener('click', closeLb);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+    // IntersectionObserver fade-in
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
